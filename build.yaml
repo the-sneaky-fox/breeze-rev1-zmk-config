@@ -4,18 +4,24 @@
 # control, add individual board + shield combinations to
 # the `include` property, e.g:
 #
-# board: [ "nice_nano_v2" ]
+# board: [ "nice_nano//zmk" ]
 # shield: [ "breeze_rev1_left", "breeze_rev1_right" ]
 # include:
 #   - board: bdn9_rev2
-#   - board: nice_nano_v2
+#   - board: nice_nano//zmk
 #     shield: reviung41
 #
 ---
 include:
-  - board: nice_nano_v2
+  - board: xiao_ble//zmk
+    shield: breeze_rev1_dongle prospector_adapter
+  - board: nice_nano//zmk
     shield: breeze_rev1_left
-  - board: nice_nano_v2
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  - board: nice_nano//zmk
     shield: breeze_rev1_right
-  - board: nice_nano_v2
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  - board: nice_nano//zmk
+    shield: settings_reset
+  - board: xiao_ble//zmk
     shield: settings_reset
