@@ -8,5 +8,6 @@ requires:
 features:
   - keys
 siblings:
+  - breeze_rev1_dongle
   - breeze_rev1_left
   - breeze_rev1_right

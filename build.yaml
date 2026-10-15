@@ -13,9 +13,15 @@
 #
 ---
 include:
+  - board: xiao_ble//zmk
+    shield: breeze_rev1_dongle prospector_adapter
   - board: nice_nano//zmk
     shield: breeze_rev1_left
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
   - board: nice_nano//zmk
     shield: breeze_rev1_right
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
   - board: nice_nano//zmk
+    shield: settings_reset
+  - board: xiao_ble//zmk
     shield: settings_reset
