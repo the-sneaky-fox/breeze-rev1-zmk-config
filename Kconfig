@@ -1,0 +1,118 @@
+choice PROSPECTOR_STATUS_SCREEN_LAYOUT
+    prompt "Default status screen layout (shown at boot)"
+    default PROSPECTOR_STATUS_SCREEN_CLASSIC
+
+config PROSPECTOR_STATUS_SCREEN_CLASSIC
+    bool "Classic layout"
+    help
+        Standard Prospector status screen
+
+config PROSPECTOR_STATUS_SCREEN_RADII
+    bool "Radii layout"
+    help
+        Colorful grid layout with rounded widgets
+
+config PROSPECTOR_STATUS_SCREEN_FIELD
+    bool "Field layout"
+    help
+        Minimal layout with flowing typing activity visualization
+
+config PROSPECTOR_STATUS_SCREEN_OPERATOR
+    bool "Operator layout"
+    help
+        Technical and information dense layout
+
+endchoice
+
+# Screens to compile in. The default screen chosen above is always enabled.
+# Additional screens require the touchscreen feature (PROSPECTOR_TOUCHSCREEN)
+# and are switched between via swipe gestures.
+
+config PROSPECTOR_SCREEN_CLASSIC_ENABLED
+    bool "Compile Classic screen"
+    default y if PROSPECTOR_STATUS_SCREEN_CLASSIC
+
+config PROSPECTOR_SCREEN_RADII_ENABLED
+    bool "Compile Radii screen"
+    default y if PROSPECTOR_STATUS_SCREEN_RADII
+    depends on PROSPECTOR_TOUCHSCREEN
+
+config PROSPECTOR_SCREEN_FIELD_ENABLED
+    bool "Compile Field screen"
+    default y if PROSPECTOR_STATUS_SCREEN_FIELD
+    depends on PROSPECTOR_TOUCHSCREEN
+
+config PROSPECTOR_SCREEN_OPERATOR_ENABLED
+    bool "Compile Operator screen"
+    default y if PROSPECTOR_STATUS_SCREEN_OPERATOR
+    depends on PROSPECTOR_TOUCHSCREEN
+
+config PROSPECTOR_TOUCHSCREEN
+    bool "Enable touchscreen support (CST816S)"
+    default n
+    select INPUT
+    help
+      Enables touch input from the CST816S capacitive touch controller on
+      the Waveshare 1.69" Touch LCD Module.
+
+      When enabled, swipe gestures work anywhere on the screen:
+      - left/right : cycle through compiled-in status screens (slide anim)
+      - up/down    : raise/lower display brightness (10% steps)
+
+config PROSPECTOR_ROTATE_DISPLAY_180
+    bool "Rotate the display 180 degrees"
+    default n
+
+config PROSPECTOR_SHOW_MODIFIERS
+    bool "Display modifier key indicators (Win/Cmd, Alt/Opt, Ctrl, Shift)"
+    default y
+
+config PROSPECTOR_SHOW_INACTIVE_MODIFIERS
+    bool "Show inactive modifier indicators (dim when not pressed)"
+    default y
+    depends on PROSPECTOR_SHOW_MODIFIERS
+    help
+      When enabled, inactive modifiers are shown with a dim color.
+      When disabled, inactive modifiers are hidden completely.
+      Only affects classic and field layouts.
+
+config PROSPECTOR_MODIFIER_ORDER
+    string "Modifier display order"
+    default "GACS"
+    depends on PROSPECTOR_SHOW_MODIFIERS
+    help
+      Order of modifier indicators. Use exactly 4 characters:
+      G=GUI/Win/Cmd, A=Alt/Opt, C=Control, S=Shift.
+      Each character must appear exactly once.
+
+choice PROSPECTOR_MODIFIER_OS
+    prompt "Modifier key style"
+    default PROSPECTOR_MODIFIER_OS_WINDOWS
+    depends on PROSPECTOR_SHOW_MODIFIERS
+
+config PROSPECTOR_MODIFIER_OS_GENERIC
+    bool "Generic (CTRL, ALT, GUI, SHFT)"
+
+config PROSPECTOR_MODIFIER_OS_WINDOWS
+    bool "Windows (WIN, ALT, CTRL, SHFT)"
+
+config PROSPECTOR_MODIFIER_OS_MAC
+    bool "Mac (CMD, OPT, CTRL, SHFT)"
+
+endchoice
+
+config PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR
+    bool "Use ambient light sensor for auto brightness"
+    default y
+
+config PROSPECTOR_FIXED_BRIGHTNESS
+    int "Fixed display brightness"
+    default 50
+    range 1 100
+    depends on !PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR
+
+config PROSPECTOR_LAYER_NAME_UPPERCASE
+    bool "Display layer names in uppercase"
+    default y
+    help
+      When enabled, layer names will be converted to uppercase for display.

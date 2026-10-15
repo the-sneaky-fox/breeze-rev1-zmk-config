@@ -54,4 +54,23 @@ RC(3,5) RC(3,4) RC(3,3) RC(3,2) RC(3,1) RC(3,0)                 RC(8,0) RC(8,1) 
                         RC(4,3) RC(4,2) RC(4,1) RC(4,0) RC(9,0) RC(9,1) RC(9,2) RC(9,3)
 		>;
 	};
+
+	lvgl_pointer_input: lvgl_pointer_input {
+		compatible = "zephyr,lvgl-pointer-input";
+		input = <&cst816s>;
+		invert-x;
+		invert-y;
+	};
+};
+
+&i2c1 {
+	status = "okay";
+
+	cst816s: cst816s@15 {
+		compatible = "hynitron,cst816s";
+		status = "okay";
+		reg = <0x15>;
+		rst-gpios = <&xiao_d 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		irq-gpios = <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	};
 };
