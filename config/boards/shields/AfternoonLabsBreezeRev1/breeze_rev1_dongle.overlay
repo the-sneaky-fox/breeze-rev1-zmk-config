@@ -8,11 +8,11 @@
 
 / {
 	chosen {
-		zmk,kscan = &mock_kscan;
+		zmk,kscan = &kscan0;
 		zmk,matrix-transform = &default_transform;
 	};
 
-	mock_kscan: mock_kscan_0 {
+	kscan0: mock_kscan_0 {
 		compatible = "zmk,kscan-mock";
 		columns = <0>;
 		rows = <0>;
@@ -74,3 +74,5 @@ RC(3,5) RC(3,4) RC(3,3) RC(3,2) RC(3,1) RC(3,0)                 RC(8,0) RC(8,1) 
 		irq-gpios = <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 	};
 };
+
+#include "breeze_rev1_layouts.dtsi"
