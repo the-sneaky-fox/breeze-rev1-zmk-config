@@ -7,9 +7,35 @@
 #include <zmk/display.h>
 #include <zmk/event_manager.h>
 #include <zmk/hid_indicators.h>
+#include <zmk/events/battery_state_changed.h>
 #include <zmk/events/hid_indicators_changed.h>
 #include <zmk/events/caps_word_state_changed.h>
+#include <zmk/events/split_central_status_changed.h>
 #include <dt-bindings/zmk/hid_indicators.h>
+
+/* --- Swap peripheral 0 <-> 1 so left/right battery indicators match keyboard halves --- */
+
+static int battery_swap_listener_cb(const zmk_event_t *eh) {
+    struct zmk_peripheral_battery_state_changed *bat_ev =
+        as_zmk_peripheral_battery_state_changed(eh);
+    if (bat_ev != NULL && bat_ev->source < 2) {
+        bat_ev->source = 1 - bat_ev->source;
+        return ZMK_EV_EVENT_BUBBLE;
+    }
+
+    struct zmk_split_central_status_changed *conn_ev =
+        as_zmk_split_central_status_changed(eh);
+    if (conn_ev != NULL && conn_ev->slot < 2) {
+        conn_ev->slot = 1 - conn_ev->slot;
+        return ZMK_EV_EVENT_BUBBLE;
+    }
+
+    return ZMK_EV_EVENT_BUBBLE;
+}
+
+ZMK_LISTENER(prospector_battery_swap, battery_swap_listener_cb);
+ZMK_SUBSCRIPTION(prospector_battery_swap, zmk_peripheral_battery_state_changed);
+ZMK_SUBSCRIPTION(prospector_battery_swap, zmk_split_central_status_changed);
 
 /* --- Caps Lock state -> Prospector modifier indicator ("CAPS" + highlight) --- */
 
