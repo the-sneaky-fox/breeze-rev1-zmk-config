@@ -31,6 +31,9 @@ config ZMK_STUDIO
 config ZMK_STUDIO_LOCKING
 	default n
 
+config LV_Z_VDB_SIZE
+	default 30
+
 endif
 
 if SHIELD_BREEZE_REV1_LEFT
