@@ -2,10 +2,15 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: olafkrawczyk
+      url-base: https://github.com/olafkrawczyk
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
+    - name: prospector-zmk-module
+      remote: olafkrawczyk
+      revision: feat/touch-swipe-screens
   self:
     path: config

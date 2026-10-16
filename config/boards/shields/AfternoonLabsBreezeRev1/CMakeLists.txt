@@ -1,0 +1,7 @@
+if(CONFIG_SHIELD_BREEZE_REV1_DONGLE AND CONFIG_SHIELD_PROSPECTOR_ADAPTER)
+  zephyr_library()
+  zephyr_library_include_directories(${ZEPHYR_LVGL_MODULE_DIR})
+  zephyr_library_include_directories(${ZEPHYR_BASE}/lib/gui/lvgl/)
+  zephyr_library_include_directories(${CMAKE_SOURCE_DIR}/include)
+  zephyr_library_sources(prospector_dongle.c)
+endif()
