@@ -31,8 +31,11 @@ config ZMK_STUDIO
 config ZMK_STUDIO_LOCKING
 	default n
 
+config LV_Z_MEM_POOL_SIZE
+	default 65536 if PROSPECTOR_TOUCHSCREEN
+
 config LV_Z_VDB_SIZE
-	default 30
+	default 20
 
 endif
 
